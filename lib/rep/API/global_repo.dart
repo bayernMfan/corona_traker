@@ -1,6 +1,6 @@
 
 import 'package:http/http.dart' as http;
-import 'package:provider_app/rep/models/GlobalModel.dart';
+import 'package:provider_app/rep/models/global_model.dart';
 import 'dart:convert';
 
 class GlobalRepo {
