@@ -1,159 +1,165 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider_app/bloc/global_bloc.dart';
-import 'package:provider_app/rep/models/global_model.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider_app/constant.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<GlobalBloc>(context).add(FetchGlobal());
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.cyan,
-      appBar: AppBar(
-        title: Center(
-          child: Text('CORONA'),
-        ),
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.only(right: 32, left: 32, top: 16, bottom: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            BlocBuilder<GlobalBloc, GlobalState>(builder: (context, state) {
-              if (state is GlobalIsNotSerached)
-                return Text("GlobalIsNotSearched");
-              else if (state is GlobalIsLoading)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              else if (state is GlobalIsLoaded)
-                return ShowGlobal(state.getGlobalInfo);
-              else
-                return Text(
-                  "Error",
-                  style: TextStyle(color: Colors.white),
-                );
-            }),
-            SearchCountry(),
-          ],
-        ),
+      body: Column(
+        children: <Widget>[
+          ClipPath(
+            clipper: MyClipper(),
+            child: Container(
+              padding: EdgeInsets.only(
+                left: 40,
+                top: 50,
+                right: 20,
+              ),
+              height: 320,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xFF3383CD),
+                    Color(0xFF11249F),
+                  ],
+                ),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/virus.png"),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: SvgPicture.asset("assets/icons/menu.svg"),
+                  ),
+                  SizedBox(height: 20),
+                  Expanded(
+                    child: Stack(
+                      children: <Widget>[
+                        SvgPicture.asset(
+                          "assets/icons/Drcorona.svg",
+                          width: 200,
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.topCenter,
+                        ),
+                        Positioned(
+                          top: 20,
+                          left: 150,
+                          child: Text(
+                            "All you need \nis stay home",
+                            style: kHeadingTextStyle.copyWith(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Container(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            height: 60,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(25),
+              border: Border.all(
+                color: Color(0xFFE5E5E5),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                SvgPicture.asset("assets/icons/maps-and-flags.svg"),
+                SizedBox(width: 20),
+                Expanded(
+                  child: DropdownButton(
+                    isExpanded: true,
+                    underline: SizedBox(),
+                    icon: SvgPicture.asset("assets/icons/dropdown.svg"),
+                    value: "USA",
+                    items: ['Indonesia', 'Bangladesh', 'USA']
+                        .map<DropdownMenuItem<String>>(
+                          (String value) => DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {},
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: "Case update\n",
+                              style: kTitleTextStyle,
+                            ),
+                            TextSpan(
+                              text: "Newest update today",
+                              style: TextStyle(color: kTextLightColor),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                    "See details",
+                    style: TextStyle(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class ShowGlobal extends StatelessWidget {
-  final GlobalModel globalInfo;
-  //final city;
-
-  //ShowGlobal(this.Global, this.city);
-  ShowGlobal(this.globalInfo);
+class MyClipper extends CustomClipper<Path> {
   @override
-  Widget build(BuildContext context) {
-    return Container(
-        //padding: EdgeInsets.only(right: 32, left: 32, top: 10),
-        child: Column(
-      children: <Widget>[
-        Text(
-          'World total:',
-          style: TextStyle(
-              color: Colors.white70, fontSize: 30, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          globalInfo.totalConfirmed.round().toString(),
-          style: TextStyle(color: Colors.white70, fontSize: 50),
-        ),
-        Text(
-          "total confirmed",
-          style: TextStyle(color: Colors.white70, fontSize: 14),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Text(
-                  globalInfo.newConfirmed.round().toString(),
-                  style: TextStyle(color: Colors.white70, fontSize: 30),
-                ),
-                Text(
-                  "new confirmed",
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
-                ),
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                Text(
-                  globalInfo.newDeaths.round().toString(),
-                  style: TextStyle(color: Colors.white70, fontSize: 30),
-                ),
-                Text(
-                  "new deaths",
-                  style: TextStyle(color: Colors.white70, fontSize: 14),
-                ),
-              ],
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Container(
-          width: double.infinity,
-          height: 50,
-          child: FlatButton(
-            shape: new RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            onPressed: () {
-              BlocProvider.of<GlobalBloc>(context).add(ResetGlobal());
-            },
-            color: Colors.indigo,
-            child: Text(
-              "Reset",
-              style: TextStyle(color: Colors.white70, fontSize: 16),
-            ),
-          ),
-        )
-      ],
-    ));
+  Path getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height - 80);
+    path.quadraticBezierTo(
+        size.width / 2, size.height, size.width, size.height - 80);
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
   }
-}
-
-class SearchCountry extends StatefulWidget {
-  SearchCountry({Key key}) : super(key: key);
 
   @override
-  _SearchCountryState createState() => _SearchCountryState();
-}
-
-class _SearchCountryState extends State<SearchCountry> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text('Search by country',
-              style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold)),
-          TextFormField(
-            textAlign: TextAlign.center,
-            decoration: InputDecoration(
-              fillColor: Colors.white,
-              labelText: 'Enter your country',
-            ),
-          ),
-        ]);
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return false;
   }
 }
