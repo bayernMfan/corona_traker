@@ -1,7 +1,7 @@
 # provider_app
 
 A new Flutter project.
-Targeted on COVID_19 worldtracking
+Targeted on COVID_19 world / country tracking
 
 ## Getting Started
 
