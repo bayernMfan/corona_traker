@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:provider_app/pages/statistic_page.dart';
 
 import '../constant.dart';
 import 'home_page.dart';
@@ -27,7 +26,7 @@ class _TabbarState extends State<Tabbar> {
         index: _currentIndex,
         children: [
           HomePage(),
-          StatisticPage(),
+          Text('Stat page'),
           Text('SearchPage'),
         ],
       ),

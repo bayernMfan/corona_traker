@@ -8,18 +8,25 @@ abstract class GlobalState extends Equatable {
 
 class GlobalInitial extends GlobalState {}
 
-class GlobalIsNotSerached extends GlobalState {}
-
 class GlobalIsLoading extends GlobalState {}
 
 class GlobalIsLoaded extends GlobalState {
-  final _globalInfo;
+  final GlobalModel _globalInfo;
 
   GlobalIsLoaded(this._globalInfo);
 
-  GlobalModel get getGlobalInfo => _globalInfo;
+  GlobalModel get getGlobalInfo {
+    return _globalInfo;
+  }
+
   @override
   List<Object> get props => [_globalInfo];
 }
 
-class GlobalIsNotLoaded extends GlobalState {}
+class GlobalIsNotLoaded extends GlobalState {
+  final String _message;
+  GlobalIsNotLoaded(this._message);
+  get getMessage => _message;
+  @override
+  List<Object> get props => [_message];
+}

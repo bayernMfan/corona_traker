@@ -1,21 +1,11 @@
 class CountryModel {
-  final newConfirmed;
-  final totalConfirmed;
-  final newDeaths;
-  final totalDeaths;
-  final newRecovered;
-  final totalRecovered;
+  final String country;
+  final String slug;
+  final String iso2;
 
-  CountryModel(this.newConfirmed, this.totalConfirmed, this.newDeaths, this.totalDeaths, this.newRecovered, this.totalRecovered);
+  CountryModel(this.country, this.slug, this.iso2);
 
-  factory CountryModel.fromJson(Map<String, dynamic> json){
-    return CountryModel(
-      json["NewConfirmed"],
-      json["TotalConfirmed"],
-      json["NewDeaths"],
-      json["TotalDeaths"],
-      json["NewRecovered"],
-      json["TotalRecovered"]
-    );
+  factory CountryModel.fromJson(Map<String, dynamic> json) {
+    return CountryModel(json["Country"], json["Slug"], json["ISO2"]);
   }
 }

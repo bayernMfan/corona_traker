@@ -9,7 +9,7 @@ class StatisticPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<GlobalBloc>(context).add(FetchGlobal());
+    print("build StatisticPage");
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.cyan,
@@ -25,21 +25,41 @@ class StatisticPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            BlocBuilder<GlobalBloc, GlobalState>(builder: (context, state) {
-              if (state is GlobalIsNotSerached)
-                return Text("GlobalIsNotSearched");
-              else if (state is GlobalIsLoading)
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              else if (state is GlobalIsLoaded)
-                return ShowGlobal(state.getGlobalInfo);
-              else
-                return Text(
-                  "Error",
-                  style: TextStyle(color: Colors.white),
-                );
-            }),
+            BlocBuilder<GlobalBloc, GlobalState>(
+              builder: (context, state) {
+                if (state is GlobalInitial)
+                  return Text("GlobalInitial");
+                else if (state is GlobalIsLoading)
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                else if (state is GlobalIsLoaded)
+                  return ShowGlobal(state.getGlobalInfo);
+                else
+                  return Text(
+                    "Error",
+                    style: TextStyle(color: Colors.white),
+                  );
+              },
+            ),
+            Container(
+              width: double.infinity,
+              height: 50,
+              child: FlatButton(
+                shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                onPressed: () {
+                  context.bloc<GlobalBloc>().add(FetchGlobal());
+                  //BlocProvider.of<GlobalBloc>(context).add(ResetGlobal());
+                  //BlocProvider.of<GlobalBloc>(context).add(FetchGlobal());
+                },
+                color: Colors.indigo,
+                child: Text(
+                  "Reset",
+                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                ),
+              ),
+            ),
             SearchCountry(),
           ],
         ),
@@ -105,22 +125,6 @@ class ShowGlobal extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        // Container(
-        //   width: double.infinity,
-        //   height: 50,
-        //   child: FlatButton(
-        //     shape: new RoundedRectangleBorder(
-        //         borderRadius: BorderRadius.all(Radius.circular(10))),
-        //     onPressed: () {
-        //       BlocProvider.of<GlobalBloc>(context).add(ResetGlobal());
-        //     },
-        //     color: Colors.indigo,
-        //     child: Text(
-        //       "Reset",
-        //       style: TextStyle(color: Colors.white70, fontSize: 16),
-        //     ),
-        //   ),
-        // ),
       ],
     ));
   }

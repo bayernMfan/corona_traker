@@ -9,31 +9,33 @@ part 'global_event.dart';
 part 'global_state.dart';
 
 class GlobalBloc extends Bloc<GlobalEvent, GlobalState> {
-
   GlobalRepo globalRepo;
-  GlobalBloc(this.globalRepo);
-
-  @override
-  GlobalState get initialState => GlobalInitial();
+  GlobalBloc(this.globalRepo) : super(GlobalInitial());
 
   @override
   Stream<GlobalState> mapEventToState(
     GlobalEvent event,
   ) async* {
-    if(event is FetchGlobal){
+    if (event is FetchGlobal) {
       yield GlobalIsLoading();
 
-      try{
-        GlobalModel globalInfo = await globalRepo.getGlobal();
-        yield GlobalIsLoaded(globalInfo);
-      }catch(_){
-        yield GlobalIsNotLoaded();
+      try {
+        if (event.getCountry != null) {
+          GlobalModel globalInfo = await globalRepo.getGlobal(event.getCountry);
+          yield GlobalIsLoaded(globalInfo);
+        } else {
+          GlobalModel globalInfo = await globalRepo.getGlobal();
+          yield GlobalIsLoaded(globalInfo);
+        }
+      } catch (exception) {
+        yield GlobalIsNotLoaded(exception.toString());
       }
-    }else if(event is ResetGlobal){
-      yield GlobalIsNotSerached();
+    } else if (event is ResetGlobal) {
+      yield GlobalInitial();
     }
   }
-  void dispose(){
+
+  void dispose() {
     this.close();
   }
 }
