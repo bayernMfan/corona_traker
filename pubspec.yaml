@@ -28,7 +28,7 @@ dependencies:
   provider: ^4.3.1
   http: ^0.12.2
   equatable: ^1.2.2
-  flutter_svg: ^0.18.0
+  flutter_svg: ^0.20.0-nullsafety.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,6 +54,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/fonts/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -70,10 +71,10 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets\fonts\Popins\Poppins-Regular.ttf
-        - asset: assets\fonts\Popins\Poppins-Medium.ttf
+        - asset: assets/fonts/Popins/Poppins-Regular.ttf
+        - asset: assets/fonts/Popins/Poppins-Medium.ttf
           weight: 600
-        - asset: assets\fonts\Popins\Poppins-Bold.ttf
+        - asset: assets/fonts/Popins/Poppins-Bold.ttf
           weight: 700
   #   - family: Trajan Pro
   #     fonts:

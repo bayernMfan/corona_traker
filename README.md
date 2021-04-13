@@ -1,6 +1,6 @@
-# provider_app
+# Covid Notify
 
-A new Flutter project.
+CoVid Notify.
 Targeted on COVID_19 world / country tracking
 
 ## Getting Started

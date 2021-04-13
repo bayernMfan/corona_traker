@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider_app/pages/statistic_page.dart';
 
 import '../constant.dart';
 import 'home_page.dart';
@@ -22,12 +23,14 @@ class _TabbarState extends State<Tabbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       body: IndexedStack(
         index: _currentIndex,
         children: [
           HomePage(),
-          Text('Stat page'),
-          Text('SearchPage'),
+          StatisticPage(),
+          Center(child: Text('SearchPage')),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

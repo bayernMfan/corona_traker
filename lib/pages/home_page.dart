@@ -81,113 +81,115 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
               child: BlocProvider(
                 create: (BuildContext context) => GlobalBloc(GlobalRepo()),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Container(
-                      //search
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                      height: 50,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        border: Border.all(
-                          color: Color(0xFFE5E5E5),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        //search
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        height: 50,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                          border: Border.all(
+                            color: Color(0xFFE5E5E5),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 20,
+                              color: kShadowColor,
+                            ),
+                          ],
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 20,
-                            color: kShadowColor,
+                        child: BlocProvider(
+                          create: (context) => CountryBloc(Country()),
+                          child: CountrySearch(), //Search by country widget
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Case update\n",
+                                  style: kTitleTextStyle,
+                                ),
+                                TextSpan(
+                                  text: "Newest update today",
+                                  style: TextStyle(color: kTextLightColor),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Text(
+                            "See details",
+                            style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),
-                      child: BlocProvider(
-                        create: (context) => CountryBloc(Country()),
-                        child: CountrySearch(), //Search by country widget
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Case update\n",
-                                style: kTitleTextStyle,
-                              ),
-                              TextSpan(
-                                text: "Newest update today",
-                                style: TextStyle(color: kTextLightColor),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Text(
-                          "See details",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
 
-                    StatsWidget(), //GlobalInfo statistic widget
+                      StatsWidget(), //GlobalInfo statistic widget
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                text: "Virus Spread\n",
-                                style: kTitleTextStyle,
-                              ),
-                              TextSpan(
-                                text: "Around the world",
-                                style: TextStyle(color: kTextLightColor),
-                              ),
-                            ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "Virus Spread\n",
+                                  style: kTitleTextStyle,
+                                ),
+                                TextSpan(
+                                  text: "Around the world",
+                                  style: TextStyle(color: kTextLightColor),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Text(
-                          "See details",
-                          style: TextStyle(
-                            color: kPrimaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      height: 190,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color(0xFFE5E5E5),
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 10),
-                            blurRadius: 20,
-                            color: kShadowColor,
+                          Text(
+                            "See details",
+                            style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ],
                       ),
-                      child: Image.asset(
-                        "assets/images/map.png",
-                        fit: BoxFit.contain,
+                      Container(
+                        height: 190,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xFFE5E5E5),
+                          ),
+                          borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 10),
+                              blurRadius: 20,
+                              color: kShadowColor,
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          "assets/images/map.png",
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -11,57 +11,62 @@ class StatisticPage extends StatelessWidget {
   Widget build(BuildContext context) {
     print("build StatisticPage");
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.cyan,
+      backgroundColor: Colors.cyan[900],
       appBar: AppBar(
         title: Center(
-          child: Text('CORONA'),
+          child: Text('CoVid Notify'),
         ),
       ),
       body: Padding(
         padding:
-            const EdgeInsets.only(right: 32, left: 32, top: 16, bottom: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            BlocBuilder<GlobalBloc, GlobalState>(
-              builder: (context, state) {
-                if (state is GlobalInitial)
-                  return Text("GlobalInitial");
-                else if (state is GlobalIsLoading)
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                else if (state is GlobalIsLoaded)
-                  return ShowGlobal(state.getGlobalInfo);
-                else
-                  return Text(
-                    "Error",
-                    style: TextStyle(color: Colors.white),
-                  );
-              },
-            ),
-            Container(
-              width: double.infinity,
-              height: 50,
-              child: FlatButton(
-                shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                onPressed: () {
-                  context.bloc<GlobalBloc>().add(FetchGlobal());
-                  //BlocProvider.of<GlobalBloc>(context).add(ResetGlobal());
-                  //BlocProvider.of<GlobalBloc>(context).add(FetchGlobal());
+            const EdgeInsets.only(right: 32, left: 32, top: 80),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              BlocBuilder<GlobalBloc, GlobalState>(
+                builder: (context, state) {
+                  if (state is GlobalInitial)
+                    return Text("GlobalInitial");
+                  else if (state is GlobalIsLoading)
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  else if (state is GlobalIsLoaded)
+                    return ShowGlobal(state.getGlobalInfo);
+                  else
+                    return Text(
+                      "Error",
+                      style: TextStyle(color: Colors.white),
+                    );
                 },
-                color: Colors.indigo,
-                child: Text(
-                  "Reset",
-                  style: TextStyle(color: Colors.white70, fontSize: 16),
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: FlatButton(
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  onPressed: () {
+                    context.bloc<GlobalBloc>().add(FetchGlobal());
+                    //BlocProvider.of<GlobalBloc>(context).add(ResetGlobal());
+                    //BlocProvider.of<GlobalBloc>(context).add(FetchGlobal());
+                  },
+                  color: Colors.indigo,
+                  child: Text(
+                    "Reset",
+                    style: TextStyle(color: Colors.white70, fontSize: 16),
+                  ),
                 ),
               ),
-            ),
-            SearchCountry(),
-          ],
+              SearchCountry(),
+              Padding(padding: EdgeInsets.only(bottom:24))
+            ],
+          ),
         ),
       ),
     );
